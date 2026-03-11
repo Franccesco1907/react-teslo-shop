@@ -36,12 +36,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     try {
       const data = await loginAction(email, password);
       localStorage.setItem('token', data.token);
-      console.log('Login successful, updating store with user and token:', data);
       set({ user: data.user, token: data.token, authStatus: 'authenticated' });
       return true
     } catch (error) {
       localStorage.removeItem('token');
-      console.error('Login error:', error);
       set({ user: null, token: null, authStatus: 'not-authenticated' });
       return false
     }
